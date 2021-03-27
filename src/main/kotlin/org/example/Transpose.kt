@@ -1,7 +1,6 @@
 package org.example
 
 import java.io.File
-import java.lang.StringBuilder
 
 /**
  * “Транспонирует” входной текст по входящим в него словам,
@@ -12,45 +11,51 @@ import java.lang.StringBuilder
  * следует считывать текст с консоли.
  */
 
-class Transpose {
+fun main(args: Array<String>) {
+    TransposeLauncher.main(args)
+}
 
-    fun trans(inputFile: String) {                     // , outputFile: String
-        val input = File(inputFile).readLines()
-        val countLine = input.size                     // кол-во сторок, для массива
-        val countWords = findMaxLengthLine(inputFile)  // макс. кол-во слов в 1 стр
-        val arrayWords = Array(countWords) { Array(countLine) { "-" } }
-//        val output = File(outputFile).bufferedWriter()
+fun arrayBuilding(inputFile: String, outputFile: String) { // trans
+    val input = File(inputFile).readLines().map { it.trim() }
+    val countLine = input.size                     // кол-во сторок, для массива
+    val countWords = findMaxLengthLine(inputFile)  // макс. кол-во слов в 1 стр
+    val arrayWords = Array(countLine) { Array(countWords) { "-" } }
+    val output = File(outputFile).bufferedWriter()
 
-        var numLine = 0
+    for ((numLine, line) in input.withIndex()) {    // кривой алгоритм заполнения массива словами для дальнейшего транспонирования
         var numWord = 0
-
-        for (line in input) {    // кривой алгоритм заполнения массива словами для дальнейшего транспонирования
-            for (word in line.split(Regex("\\s+"))) {
-                arrayWords[numLine][numWord] = word
-                numWord++
-            }
-            numLine++
-            numWord = 0
-        }
-
-        val transArray = Array(countLine) { Array(countWords) { "-" } }
-        val sb = StringBuilder()
-
-        for (i in 0 until countLine){
-            for(j in 0 until countWords){
-                transArray[i][j] = arrayWords[j][i]
-                if(transArray[i][j] != "-") sb.append(transArray[i][j])
-            }
-            sb.appendln()
+        val splitStr = line.split(Regex(" "))
+        for (word in splitStr) {
+            if (word == "") continue
+            else arrayWords[numLine][numWord] = word
+            numWord++
         }
     }
 
-    private fun findMaxLengthLine(inputFile: String): Int { // найти строку с наибольшим кол-ом слов, для массива
-        var res = 0
-        for (line in File(inputFile).readLines()) {
-            val currentCountWords = line.split(Regex("\\S+")).size
-            if (currentCountWords > res) res = currentCountWords
+    output.use {
+        val transArray = Array(countWords) { Array(countLine) { "-" } }
+
+        for (i in 0 until countWords) {
+            for (j in 0 until countLine) {
+                transArray[i][j] = arrayWords[j][i]
+                if (transArray[i][j] != "-") it.append(transArray[i][j]).append(" ")
+                else it.append("  ")
+            }
+            it.appendLine()
         }
-        return res
+
     }
 }
+
+private fun findMaxLengthLine(inputFile: String): Int {   // найти строку с наибольшим кол-ом слов, для массива
+    var res = 0
+    for (line in File(inputFile).readLines()) {
+        var size = 0
+        for (i in line.split(" ")) if (i != "") size++
+        if (size > res) res = size
+    }
+    return res
+}
+
+fun countLine(inputFile: String): Int = File(inputFile).readLines().size
+
