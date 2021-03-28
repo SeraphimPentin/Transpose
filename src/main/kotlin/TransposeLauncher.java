@@ -10,13 +10,13 @@ import org.kohsuke.args4j.*;
 public class TransposeLauncher {
 
     @Option(name = "-a ", required = false, usage = "Each word takes up num characters")
-    private  static int aNum = 10;
+    private Boolean a = true;
 
-    @Option(name = "-t", required = false, usage = "Crop to the right size")
-    private String t;
+    @Option(name = "-t", required = false, usage = "Crop to the right size", forbids = {"-r"})
+    private boolean t = true;
 
-    @Option(name = "-r", usage = "Align the word to the right border")
-    private String r;
+    @Option(name = "-r", usage = "Align the word to the right border", forbids = {"-t"})
+    private boolean r = true;
 
     @Argument(metaVar = "OutputName", usage = "Output file name")
     private String outputFileName;
@@ -39,9 +39,11 @@ public class TransposeLauncher {
         try {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
+            System.err.println(e.getMessage());
+            System.err.println("java -jar transpose.jar [-a num] -t -r [-o ofile] file");
+            parser.printUsage(System.err);
 
         }
     }
 
 }
-
