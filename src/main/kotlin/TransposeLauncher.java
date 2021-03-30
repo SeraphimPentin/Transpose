@@ -1,18 +1,13 @@
 
 import org.kohsuke.args4j.*;
 
-//import org.kohsuke.args4j.CmdLineException;
-//import org.kohsuke.args4j.CmdLineParser;
-//import org.kohsuke.args4j.Option;
-//import org.kohsuke.args4j.Argument;
-
 
 public class TransposeLauncher {
 
-    @Option(name = "-a ", required = false, usage = "Each word takes up num characters")
+    @Option(name = "-a ", usage = "Each word takes up num characters")
     private Boolean a = true;
 
-    @Option(name = "-t", required = false, usage = "Crop to the right size", forbids = {"-r"})
+    @Option(name = "-t", usage = "Crop to the right size", forbids = {"-r"})
     private boolean t = true;
 
     @Option(name = "-r", usage = "Align the word to the right border", forbids = {"-t"})
@@ -44,6 +39,6 @@ public class TransposeLauncher {
             parser.printUsage(System.err);
 
         }
+        // TransposeKt.transpose();
     }
-
 }

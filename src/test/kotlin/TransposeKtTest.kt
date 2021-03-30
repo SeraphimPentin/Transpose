@@ -1,12 +1,14 @@
-package org.example
-
 import org.junit.Test
+
 import org.junit.Assert.*
 
-class MainKtTest {
+class TransposeKtTest {
 
     @Test
     fun main() {
     }
 
+    @Test
+    fun transpose() {
+    }
 }
