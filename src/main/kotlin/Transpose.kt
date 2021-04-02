@@ -15,8 +15,8 @@ fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String, in
     val arrayWords = Array(countLine) { Array(countWords) { "-" } }
 
 
-    for ((numLine, line) in input.withIndex()) {    // кривой алгоритм заполнения массива словами для дальнейшего транспонирования
-        val splitStr = line.split(" ")
+    for ((numLine, line) in input.withIndex()) {    // кривой алгоритм заполнения массива (с учетомв веденных флагов)
+        val splitStr = line.split(" ")              // словами для дальнейшего транспонирования
         for ((numWord, word) in splitStr.withIndex()) {
             if (flagT && word.length > flagA) arrayWords[numLine][numWord] = word.substring(0, flagA)
             else {
@@ -40,13 +40,15 @@ fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String, in
     }
 
     if (outputFile == "no") {
-        for (line in sb.split(Regex("\\n"))) {
-            sbF.append(line.trimEnd()).appendLine()
+        for ((index, line) in sb.split(Regex("\\n")).withIndex()) {
+            sbF.append(line.trimEnd())
+            if (index != countWords - 1) sbF.appendLine()
         }
         println(sbF)
     } else output.use {
-        for (line in sb.split(Regex("\\n"))) {
-            it.append(line.trimEnd()).appendLine()
+        for ((index,line) in sb.split(Regex("\\n")).withIndex()) {
+            it.append(line.trimEnd())
+            if (index != countWords) it.appendLine()
         }
     }
     println("the transposition was successful")

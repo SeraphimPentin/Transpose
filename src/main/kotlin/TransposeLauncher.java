@@ -26,7 +26,6 @@ public class TransposeLauncher {
         new TransposeLauncher().parserArgs(args);
     }
 
-
     private void parserArgs(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
 
@@ -38,8 +37,8 @@ public class TransposeLauncher {
             parser.printUsage(System.err);
             throw new IllegalArgumentException("");
         }
+
         int num = 0;
-        System.out.println(arguments.get(0));
         if (a) {
             try {
                 num = Integer.parseInt(arguments.get(1));
@@ -54,10 +53,6 @@ public class TransposeLauncher {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        System.out.println(out);
-//        System.out.println(input);
-
 
         TransposeKt.transpose(num, t, r, out, input);
     }

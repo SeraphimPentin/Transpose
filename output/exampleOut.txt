@@ -1,9 +1,9 @@
-ABVC__ GRED__ Sd____ VIEW__
-B_____ HaN___ TiRY__ WHEELS
-CU____ IM____ Yang__
-DOT___ JU____ UI____
-ER____ LAY___
-FACE__ MuKEP_
-       N_____
-       OPEN__
-       PIN___
+__ABVC __GRED ____Sd __VIEW
+_____B ___HaN __TiRY WHEELS
+____CU ____IM __Yang
+___DOT ____JU ____UI
+____ER ___LAY
+__FACE _MuKEP
+       _____N
+       __OPEN
+       ___PIN
