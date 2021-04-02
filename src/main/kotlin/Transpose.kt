@@ -1,4 +1,5 @@
 import java.io.File
+import java.lang.StringBuilder
 
 
 fun main(args: Array<String>) {
@@ -25,16 +26,27 @@ fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String, in
         }
     }
 
-    output.use {
-        val transArray = Array(countWords) { Array(countLine) { "-" } }
+    val sb = StringBuilder()
+    val sbF = StringBuilder()
+    val transArray = Array(countWords) { Array(countLine) { "-" } }
 
-        for (i in 0 until countWords) {
-            for (j in 0 until countLine) {
-                transArray[i][j] = arrayWords[j][i]
-                if (transArray[i][j] != "-") it.append(transArray[i][j]).append(" ")
-                else for (k in 0..flagA) it.append(" ")
-            }
-            it.appendLine()
+    for (i in 0 until countWords) {
+        for (j in 0 until countLine) {
+            transArray[i][j] = arrayWords[j][i]
+            if (transArray[i][j] != "-") sb.append(transArray[i][j]).append(" ")
+            else for (k in 0..flagA) sb.append(" ")
+        }
+        if (i != countWords - 1) sb.appendLine()
+    }
+
+    if (outputFile == "no") {
+        for (line in sb.split(Regex("\\n"))) {
+            sbF.append(line.trimEnd()).appendLine()
+        }
+        println(sbF)
+    } else output.use {
+        for (line in sb.split(Regex("\\n"))) {
+            it.append(line.trimEnd()).appendLine()
         }
     }
     println("the transposition was successful")

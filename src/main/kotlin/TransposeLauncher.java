@@ -9,23 +9,17 @@ public class TransposeLauncher {
     @Option(name = "-a", usage = "Each word takes up num characters")
     private boolean a = false;
 
-    @Option(name = "-t", usage = "Crop to the right size")
+    @Option(name = "-t", usage = "Crop the word to the desired size")
     private boolean t = false;
 
     @Option(name = "-r", usage = "Align the word to the right border")
     private boolean r = false;
 
-//    @Option(name = "-o", metaVar = "OutputName", usage = "Output file name")
-//    private String out;
+    @Option(name = "-o", metaVar = "OutputName", usage = "Output file name")
+    private String out = "no";
 
     @Argument
     private List<String> arguments = new ArrayList<String>();
-
-    public TransposeLauncher() {
-    }
-
-//    @Argument(metaVar = "InputName", index = 1, usage = "Input file name")
-//    private String inputFile;
 
 
     public static void main(String[] args) {
@@ -40,10 +34,9 @@ public class TransposeLauncher {
             parser.parseArgument(args);
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("java -jar transpose.jar [-a num] -t -r [-o ofile] file");
+            System.err.println("java -jar transpose.jar [-a num] [-t] [-r] [-o ofile] [file]");
             parser.printUsage(System.err);
             throw new IllegalArgumentException("");
-
         }
         int num = 0;
         System.out.println(arguments.get(0));
@@ -55,13 +48,15 @@ public class TransposeLauncher {
             }
         } else if (t || r) num = 10;
 
-        String input = arguments.get(arguments.size() - 1);// input
-        String out = arguments.get(arguments.size() - 2);// input
-        System.out.println(arguments.get(0) + " 000");
-        System.out.println(arguments.get(1) + " 111");
-//        System.out.println(arguments.get(2) + " 222");
-//        System.out.println(arguments.get(3) + " 333");
-        System.out.println(input);
+        String input = "";
+        try {
+            input = arguments.get(arguments.size() - 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        System.out.println(out);
+//        System.out.println(input);
 
 
         TransposeKt.transpose(num, t, r, out, input);

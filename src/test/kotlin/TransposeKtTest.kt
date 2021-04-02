@@ -19,8 +19,9 @@ class TransposeKtTest {
 
     @Test
     fun transpose() {
-        main("transpose -a 5 -t output/exampleOut input/example.txt".split(" ").toTypedArray())
-        assertTrue{ assertFileContent("input/example_1", "output/exampleOut")}
+        main("transpose -a 6 -t -o output/exampleOut.txt input/example.txt".split(" ").toTypedArray())
+//        main("transpose -r -t input/example.txt".split(" ").toTypedArray())
+//        assertTrue{ assertFileContent("input/example_1", "output/exampleOut")}
 //        assertThrows(IllegalArgumentException::class.java) {
 //            main("".split(" ").toTypedArray())
 //        }
