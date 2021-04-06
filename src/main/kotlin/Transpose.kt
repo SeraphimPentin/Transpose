@@ -1,10 +1,10 @@
 import java.io.File
+import java.io.IOException
 import java.lang.StringBuilder
 
 
 fun main(args: Array<String>) {
     TransposeLauncher.main(args)
-//    transpose(4, flagT = false, flagR = true, "output/exampleOut", "input/example.txt")
 }
 
 fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String, inputFile: String) {
@@ -45,10 +45,13 @@ fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String, in
             if (index != countWords - 1) sbF.appendLine()
         }
         println(sbF)
-    } else output.use {
-        for ((index,line) in sb.split(Regex("\\n")).withIndex()) {
+    }
+
+    if (!File(outputFile).exists() && !File(outputFile).isFile) throw IOException()
+    else output.use {
+        for ((index, line) in sb.split(Regex("\\n")).withIndex()) {
             it.append(line.trimEnd())
-            if (index != countWords) it.appendLine()
+            if (index != countWords - 1) it.appendLine()
         }
     }
     println("the transposition was successful")

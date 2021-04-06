@@ -1,6 +1,7 @@
 
 import org.kohsuke.args4j.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +23,23 @@ public class TransposeLauncher {
     private List<String> arguments = new ArrayList<String>();
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new TransposeLauncher().parserArgs(args);
     }
 
-    private void parserArgs(String[] args) {
+    private void parserArgs(String[] args) throws IOException {
         CmdLineParser parser = new CmdLineParser(this);
 
         try {
             parser.parseArgument(args);
+            if(arguments.isEmpty() || !arguments.get(0).equals("transpose")){
+                System.err.println("Error entering arguments");
+                parser.printUsage(System.err);
+                System.err.println("transpose [-a num] [-t] [-r] [-o ofile] [file]");
+                throw new IllegalArgumentException();}
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("java -jar transpose.jar [-a num] [-t] [-r] [-o ofile] [file]");
+            System.err.println("transpose [-a num] [-t] [-r] [-o ofile] [file]");
             parser.printUsage(System.err);
             throw new IllegalArgumentException("");
         }
@@ -51,7 +57,9 @@ public class TransposeLauncher {
         try {
             input = arguments.get(arguments.size() - 1);
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             e.printStackTrace();
+            throw new IOException();
         }
 
         TransposeKt.transpose(num, t, r, out, input);
