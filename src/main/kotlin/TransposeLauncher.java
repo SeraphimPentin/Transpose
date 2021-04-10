@@ -1,14 +1,11 @@
 
 import org.kohsuke.args4j.*;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TransposeLauncher {
 
     @Option(name = "-a", usage = "Each word takes up num characters")
-    private boolean a = false;
+    private int a = 10;
 
     @Option(name = "-t", usage = "Crop the word to the desired size")
     private boolean t = false;
@@ -17,10 +14,10 @@ public class TransposeLauncher {
     private boolean r = false;
 
     @Option(name = "-o", metaVar = "OutputName", usage = "Output file name")
-    private String out = "no";
+    private String out = null;
 
     @Argument
-    private List<String> arguments = new ArrayList<String>();
+    private String input = null;
 
 
     public static void main(String[] args) throws IOException {
@@ -32,36 +29,15 @@ public class TransposeLauncher {
 
         try {
             parser.parseArgument(args);
-            if(arguments.isEmpty() || !arguments.get(0).equals("transpose")){
-                System.err.println("Error entering arguments");
-                parser.printUsage(System.err);
-                System.err.println("transpose [-a num] [-t] [-r] [-o ofile] [file]");
-                throw new IllegalArgumentException();}
+            if (input.isEmpty()) throw new IOException();
+
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
-            System.err.println("transpose [-a num] [-t] [-r] [-o ofile] [file]");
+            System.err.println("java -jar transpose.jar [-a num] [-t] [-r] [-o ofile] [file]");
             parser.printUsage(System.err);
-            throw new IllegalArgumentException("");
+            return;
         }
 
-        int num = 0;
-        if (a) {
-            try {
-                num = Integer.parseInt(arguments.get(1));
-            } catch (NumberFormatException e) {
-                System.out.println("Wrong it's not a number");
-            }
-        } else if (t || r) num = 10;
-
-        String input = "";
-        try {
-            input = arguments.get(arguments.size() - 1);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            throw new IOException();
-        }
-
-        TransposeKt.transpose(num, t, r, out, input);
+        TransposeKt.transpose(a, t, r, out, input);
     }
 }
