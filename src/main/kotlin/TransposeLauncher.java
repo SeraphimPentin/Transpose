@@ -29,7 +29,6 @@ public class TransposeLauncher {
 
         try {
             parser.parseArgument(args);
-            if (input.isEmpty()) throw new IOException();
 
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
