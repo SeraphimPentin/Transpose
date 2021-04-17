@@ -1,10 +1,8 @@
 import java.io.File
 import java.io.IOException
 
-
 fun main(args: Array<String>) {
     TransposeLauncher.main(args)
-//    transpose(7, flagT = true, flagR = true, outputFile = "output/temp", inputFile = null)
 }
 
 fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String?, inputFile: String?) {
@@ -46,13 +44,6 @@ fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String?, i
                 for (j in 0 until countLine) {
                     if (arrayWords[i][j] != null) {
                         it.append(arrayWords[i][j]).append(" ")
-/*                    for (f in countLine - 1 downTo j) {
-                        if (arrayWords[i][f] != null) {
-                            it.append(" ")
-                            break
-                        } else continue
-                    }
- */
                     } else for (k in 0..flagA) it.append(" ")
                 }
                 if (i != countWords - 1) it.appendLine()
@@ -61,7 +52,7 @@ fun transpose(flagA: Int, flagT: Boolean, flagR: Boolean, outputFile: String?, i
     }
 }
 
-private fun findMaxLengthLine(input: List<String?>): Int {   // найти строку с наибольшим кол-ом слов, для массива
+private fun findMaxLengthLine(input: List<String?>): Int {
     var res = 0
     for (line in input) {
         val size = line?.split(" ")?.size
