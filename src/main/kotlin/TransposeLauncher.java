@@ -35,9 +35,6 @@ public class TransposeLauncher {
             System.err.println(e.getMessage());
             System.err.println("java -jar transpose.jar [-a num] [-t] [-r] [-o ofile] [file]");
             parser.printUsage(System.err);
-            return;
         }
-
-//        TransposeKt.transpose(a, t, r, out, input);
     }
 }
